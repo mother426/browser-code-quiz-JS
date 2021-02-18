@@ -11,6 +11,7 @@
 <!--button that initializes game-->
 <!-- timer starts when games starts -->
     <div id="question-card" class="hidden">
+        <div id="game-timer"></div>
         <h2 id="quiz-question">question</h2>
         <button class="answer-btn">answer</button>
         <button class="answer-btn">answer</button>
@@ -18,13 +19,21 @@
         <button class="answer-btn">answer</button>
     </div>
     <div>
-        <button id="start" class="">start</button>
+        <button id="start" class="">start game</button>
         <button id="next-question" class="hidden">next question</button>
+    </div>
+
+    <div id="high-score-section" class="hidden">
+        <h2>High Scores</h2>
+        <ul id="high-score-list"></ul>
+        <input type="text" placeholder="enter initials here" id="high-scorer">
+        <button id="post-high-score">post high-score</button>
+        <button id="clear-high-score">clear high-scores</button>
     </div>
 
 
 
 
-<script src="assets/script.js"></script>
+<script src="assets/new.js"></script>
 </body>
 </html>

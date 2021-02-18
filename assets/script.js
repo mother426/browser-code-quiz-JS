@@ -1,9 +1,11 @@
 const startBtn = document.getElementById("start");
-const nextQuestonBtn = document.getElementById("next-question");
+// const nextQuestonBtn = document.getElementById("next-question");
 const questionCard = document.getElementById("question-card");
 const quizQuestion = document.getElementById("quiz-question");
 const answerButton = document.querySelectorAll(".answer-btn");
+const gameTimer = document.getElementById('game-timer');
 var currentQuestionIndex = 0;
+let secondsLeft = 100;
 
 const questionsArray = [
   {
@@ -40,14 +42,22 @@ const questionsArray = [
 
 function startGame() {
   startBtn.classList.add("hidden");
-  nextQuestonBtn.classList.remove("hidden");
+//   nextQuestonBtn.classList.remove("hidden");
   questionCard.classList.remove("hidden");
-  setQuestion();
+  time = setInterval(function() {
+      secondsLeft--;
+      gameTimer.textContent = "Time left: " + secondsLeft;
+      
+      if(secondsLeft <= 0) {
+          clearInterval(time);
+          console.log('time up')
+        }
+    }, 1000);
+    setQuestion();
 }
 
 function setQuestion() {
-  let choices = questionsArray[currentQuestionIndex].answers;
-  let buttonArray = Array.from(answerButton);
+  const choices = questionsArray[currentQuestionIndex].answers;
   quizQuestion.innerHTML = questionsArray[currentQuestionIndex].question;
   // populate answer buttons with answers in questionsArray
   answerButton[0].innerHTML = choices.a;
@@ -64,6 +74,7 @@ function userAnswerInput(event) {
   const clickedAnswer = event.target.textContent;
   const rightAnswer = questionsArray[currentQuestionIndex].correctAnswer;
   // check to see if user input matches correct answer
+  console.log(clickedAnswer,rightAnswer)
   if (clickedAnswer === rightAnswer) {
     alert("correct!");
     currentQuestionIndex++;
@@ -101,4 +112,4 @@ function goToNextQuestion() {
 
 startBtn.addEventListener("click", startGame);
 
-nextQuestonBtn.addEventListener("click", setQuestion);
+// nextQuestonBtn.addEventListener("click", setQuestion);
