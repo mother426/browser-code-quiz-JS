@@ -6,11 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Quiz</title>
     <link rel="stylesheet" href="assets/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 </head>
 <body>
-<!--button that initializes game-->
-<!-- timer starts when games starts -->
-    <div id="question-card" class="hidden">
+    <div id="question-card" class="hidden position-absolute top-50 start-50 translate-middle">
         <div id="game-timer"></div>
         <h2 id="quiz-question">question</h2>
         <button class="answer-btn">answer</button>
@@ -18,20 +17,16 @@
         <button class="answer-btn">answer</button>
         <button class="answer-btn">answer</button>
     </div>
-    <div>
+    <div class="position-absolute top-50 start-50 translate-middle" id="start-screen">
+        <h2>John's Code Quiz</h2>
         <button id="start" class="">start game</button>
-        <button id="next-question" class="hidden">next question</button>
     </div>
 
-    <div id="high-score-input" class="hidden">
+    <div id="high-score-input" class="hidden position-absolute top-50 start-50 translate-middle">
         <h2>Enter your initials</h2>
         <input type="text" placeholder="enter initials here" id="high-scorer">
         <button id="post-high-score">post high-score</button>
     </div>
-
-
-
-
 <script src="assets/new.js"></script>
 </body>
 </html>
