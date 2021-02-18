@@ -6,9 +6,9 @@ const questionCard = document.getElementById("question-card");
 const quizQuestion = document.getElementById("quiz-question");
 const answerButton = document.querySelectorAll(".answer-btn");
 const gameTimer = document.getElementById('game-timer');
-const highScoreSection = document.getElementById('high-score-section');
+const highScoreInput = document.getElementById('high-score-input');
 const clearButton = document.getElementById('clear-high-score');
-
+const restartQuiz = document.getElementById('restart-quiz');
 
 var currentQuestionIndex = 0;
 
@@ -49,16 +49,19 @@ const questionsArray = [
 
 // var initials = "";
 
-postHighScoreButton.addEventListener('click', function(event){
-  event.preventDefault();
-  // console.log('key-value', leaderboardSpot)
-  // console.log('name', name);
-  // console.log('time', timeLeft);
-  // localStorage.setItem("user", user);
-  // localStorage.setItem("score", secondsLeft);
-  storeHighScores();
-});
+if (postHighScoreButton) {
+  postHighScoreButton.addEventListener('click', function(event){
+    event.preventDefault();
+    // console.log('key-value', leaderboardSpot)
+    // console.log('name', name);
+    // console.log('time', timeLeft);
+    // localStorage.setItem("user", user);
+    // localStorage.setItem("score", secondsLeft);
+    storeHighScores();
+    window.location.assign('highscores.html');
+  });
 
+}
 
 function storeHighScores() {
   var storedHighScores = [];
@@ -88,6 +91,8 @@ function storeHighScores() {
 var highScoreList = document.getElementById('high-score-list');
 
 function renderHighScores() {
+  if (highScoreList){
+
   var allScores = [];
 
   if (localStorage.getItem('userInfo')) {
@@ -104,9 +109,8 @@ function renderHighScores() {
     newLi.textContent = JSON.stringify(score);
     highScoreList.appendChild(newLi);
   });
-  
+}
 };
-
 
 // initialsInput.addEventListener('input', function(event){
 //   initials = (event.target.value);
@@ -129,7 +133,6 @@ function init() {
     renderHighScores();
   }
 }
-
 
 function startGame() {
   startBtn.classList.add("hidden");
@@ -176,11 +179,9 @@ function userAnswerInput(event) {
    }
 };
 
-
 function endGame() {
-    
     clearInterval(time);
-    highScoreSection.classList.remove("hidden");
+    highScoreInput.classList.remove("hidden");
     questionCard.classList.add("hidden");
 };
 
@@ -206,21 +207,33 @@ function endGame() {
 //   console.log(currentQuestionIndex);
 // }
 
-
+if (startBtn){
 startBtn.addEventListener("click", startGame);
+};
 
 
+if (questionCard) {
 questionCard.addEventListener("click", function (event) {
   if(event.target.classList.contains('answer-btn')){
     userAnswerInput(event)
   }
-});
+})
+};
 
 function clearStorage() {
   localStorage.clear();
   highScoreList.innerHTML = "";
 };
 
+
+if(restartQuiz){
+  restartQuiz.addEventListener('click', function() {
+    window.location.assign('index.html');
+  })
+}
+
+if (clearButton){
 clearButton.addEventListener('click', clearStorage);
+}
 
 init();
