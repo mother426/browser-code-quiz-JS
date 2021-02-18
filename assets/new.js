@@ -7,6 +7,8 @@ const quizQuestion = document.getElementById("quiz-question");
 const answerButton = document.querySelectorAll(".answer-btn");
 const gameTimer = document.getElementById('game-timer');
 const highScoreSection = document.getElementById('high-score-section');
+const clearButton = document.getElementById('clear-high-score');
+
 
 var currentQuestionIndex = 0;
 
@@ -86,10 +88,15 @@ function storeHighScores() {
 var highScoreList = document.getElementById('high-score-list');
 
 function renderHighScores() {
+  var allScores = [];
+
+  if (localStorage.getItem('userInfo')) {
+    allScores = JSON.parse(localStorage.getItem('userInfo'));
+  }
   // empty out the list in html
   highScoreList.innerHTML = "";
   // pull up local high score data AS AN ARRAY
-  var allScores = JSON.parse(localStorage.getItem('userInfo'));
+  // var allScores = JSON.parse(localStorage.getItem('userInfo'));
   // use new array to 
   allScores.forEach(function(score) {
     console.log(score);
@@ -122,9 +129,6 @@ function init() {
     renderHighScores();
   }
 }
-
-
-
 
 
 function startGame() {
@@ -212,4 +216,11 @@ questionCard.addEventListener("click", function (event) {
   }
 });
 
-init ();
+function clearStorage() {
+  localStorage.clear();
+  highScoreList.innerHTML = "";
+};
+
+clearButton.addEventListener('click', clearStorage);
+
+init();
