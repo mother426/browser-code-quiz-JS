@@ -1,3 +1,5 @@
+// Program DOM elements 
+
 const startBtn = document.getElementById("start");
 const initialsInput = document.getElementById('high-scorer');
 const postHighScoreButton = document.getElementById('post-high-score');
@@ -10,10 +12,13 @@ const clearButton = document.getElementById('clear-high-score');
 const restartQuiz = document.getElementById('restart-quiz');
 const startScreen = document.getElementById('start-screen');
 
+// Will be used to loop through questions as an array
 var currentQuestionIndex = 0;
+// Game starting time
+var secondsLeft = 75;
 
-var secondsLeft = 100;
 
+// Questions set as an array, so it is easier to iterate through 
 const questionsArray = [
   {
     question: "Who is the creator of JavaScript?",
@@ -87,6 +92,7 @@ const questionsArray = [
   }
 ];
 
+// Function that is called when start button is clicked, starts timer then moves to setQuestion function
 function startGame() {
   startScreen.classList.add("hidden");
   questionCard.classList.remove("hidden");
@@ -96,13 +102,14 @@ function startGame() {
     
     if(secondsLeft <= 0) {
       clearInterval(time);
-      alert('You ran out of time');
+      alert('You ran out of time, your score is ' + secondsLeft);
       endGame();
     }
   }, 1000);
   setQuestion();
 };
 
+// Loops through questions array, populates question text and answer buttons
 function setQuestion() {
   const choices = questionsArray[currentQuestionIndex].answers;
   quizQuestion.innerHTML = questionsArray[currentQuestionIndex].question;
@@ -112,6 +119,7 @@ function setQuestion() {
   }
 };
 
+// function that is called when user clicks an answer, checks to see if user input is correct or not, if not timer is decremented and currentquestionindex is incremented
 function userAnswerInput(event) {
   const clickedAnswer = event.target.getAttribute("data-answer");
   const rightAnswer = questionsArray[currentQuestionIndex].correctAnswer;
@@ -122,11 +130,12 @@ function userAnswerInput(event) {
   if (currentQuestionIndex < questionsArray.length){
     setQuestion();
   } else {
-    alert('Thanks for playing~')
+    alert('Thanks for playing~ Your score is' + " " + secondsLeft);
     endGame();  
   }
 };
 
+// function stores high scores into browser localstorage, each userIntials/userScore is saved to local storage as an array item. then moves to renderHighscores function
 function storeHighScores() {
   var storedHighScores = [];
   
@@ -147,8 +156,10 @@ function storeHighScores() {
   renderHighScores();
 };
 
+// DOM element used in renderHighScore function
 var highScoreList = document.getElementById('high-score-list');
 
+// Renders the users input initials and score to the high scores <ul></ul>
 function renderHighScores() {
   if (highScoreList){
     var allScores = [];
@@ -167,6 +178,7 @@ function renderHighScores() {
   }
 };
 
+// Ran when site loads, will print scores to highscorepage if prior site data already exists
 function init() {
   var savedScores = (localStorage.getItem('userInfo'));
   if (savedScores !== null){   
@@ -174,12 +186,15 @@ function init() {
   }
 };
 
+// Function that ends the game, hides question section and displays highscore input section 
 function endGame() {
   clearInterval(time);
   highScoreInput.classList.remove("hidden");
   questionCard.classList.add("hidden");
 };
 
+// Event listeners for various buttons on the site
+// Due to there being two HTML pages, if statements check to see if a current element exists before a function tries to run
 if (postHighScoreButton) {
   postHighScoreButton.addEventListener('click', function(event){
     event.preventDefault();
@@ -215,4 +230,5 @@ function clearStorage() {
   highScoreList.innerHTML = "";
 };
 
+// Makes sure init is running on page load
 init();
